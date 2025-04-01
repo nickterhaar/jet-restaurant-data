@@ -1,0 +1,8 @@
+<configuration>
+
+    <!-- Disable all log messages by setting the root logger level to OFF -->
+    <root level="OFF">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
