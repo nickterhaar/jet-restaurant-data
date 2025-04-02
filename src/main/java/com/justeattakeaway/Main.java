@@ -1,14 +1,17 @@
 package com.justeattakeaway;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.justeattakeaway.models.Restaurant;
+import com.justeattakeaway.parsers.RestaurantParser;
+import com.justeattakeaway.services.RestaurantService;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -24,7 +27,7 @@ public class Main {
 
         try {
             String jsonResponse = fetchRestaurantData(formattedPostcode);
-            displayRestaurants(jsonResponse);
+            displayParsedRestaurants(jsonResponse);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -43,33 +46,13 @@ public class Main {
         return response;
     }
 
-    private static void displayRestaurants(String jsonResponse) throws JsonProcessingException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        JsonNode rootNode = mapper.readTree(jsonResponse);
-//        JsonNode restaurants = rootNode.path("restaurants");
-//
-//        if (restaurants.isArray()) {
-//            int count = 0;
-//            for (JsonNode restaurant : restaurants) {
-//                if (count >= 10) break;
-//                String name = restaurant.path("name").asText();
-//                String cuisines = restaurant.path("cuisines").isArray()
-//                    ? restaurant.path("cuisines").findValuesAsText("name").toString()
-//                    : "N/A";
-//                double rating = restaurant.path("rating").path("starRating").asDouble();
-//                String address = restaurant.path("address").path("firstLine").asText() + ", "
-//                    + restaurant.path("address").path("postalCode").asText() + ", "
-//                    + restaurant.path("address").path("city").asText();
-//
-//                System.out.println("Name: " + name);
-//                System.out.println("Cuisines: " + cuisines);
-//                System.out.println("Rating: " + rating);
-//                System.out.println("Address: " + address);
-//                System.out.println("----------------------------------------");
-//                count++;
-//            }
-//        } else {
-//            System.out.println("No restaurants found for the given postcode.");
-//        }
+    private static void displayParsedRestaurants(String jsonResponse) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(jsonResponse);
+        JsonNode restaurantsNode = rootNode.path("restaurants");
+
+        List<Restaurant> restaurants = RestaurantParser.parseRestaurants(restaurantsNode);
+        RestaurantService.displayRestaurants(restaurants);
+
     }
 }

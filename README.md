@@ -19,3 +19,6 @@ Regardless of interface we’d like you to limit your shown data to the first 10
 ---
 ## My Solution
 
+
+#### Side notes
+The first 2 commits are done on the same date (and time). This is because I messed something up in the first to, so I had to redo them.
