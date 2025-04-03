@@ -1,7 +1,10 @@
 package com.justeattakeaway.models;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Restaurant {
     private String name;
     private List<String> cuisines;
@@ -13,22 +16,6 @@ public class Restaurant {
         this.cuisines = cuisines;
         this.rating = rating;
         this.address = address;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getCuisines() {
-        return cuisines;
-    }
-
-    public double getRating () {
-        return rating;
-    }
-
-    public Address getAddress() {
-        return address;
     }
 
     @Override

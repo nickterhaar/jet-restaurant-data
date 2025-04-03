@@ -1,5 +1,8 @@
 package com.justeattakeaway.models;
 
+import lombok.Data;
+
+@Data
 public class Address {
     private String firstLine;
     private String postalCode;
@@ -11,20 +14,8 @@ public class Address {
         this.city = city;
     }
 
-    public String getFirstLine() {
-        return firstLine;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
     @Override
     public String toString() {
-        return (firstLine.isEmpty() ? "" : ", " + firstLine) + (postalCode.isEmpty() ? "" : ", " + postalCode) + (city.isEmpty() ? "" : ", " + city);
+        return (firstLine.isEmpty() ? "" : firstLine) + (city.isEmpty() ? "" : ", " + city) + (postalCode.isEmpty() ? "" : " " + postalCode);
     }
 }
