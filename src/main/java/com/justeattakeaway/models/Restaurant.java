@@ -20,10 +20,12 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Name: " + name +
+        return
+            "----------------------------------------\n" +
+            "Name: " + name +
             "\nCuisines: " + (cuisines.isEmpty() ? "N/A" : String.join(", ", cuisines)) +
             "\nRating: " + rating +
             "\nAddress: " + address +
-            "\n----------------------------------------";
+            "\n----------------------------------------\n";
     }
 }

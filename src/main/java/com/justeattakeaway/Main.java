@@ -19,22 +19,21 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a UK postcode: ");
-        String postcode = scanner.nextLine();
-        System.out.println("Results for: " + postcode + "\n");
-        String formattedPostcode = postcode.trim().replaceAll("\\s+", "");
-
+        System.out.print("Enter a UK Postal Code: ");
+        String postalCode = scanner.nextLine();
+        System.out.println("\nResults for: " + postalCode + "\n");
+        String formattedPostalcode = postalCode.trim().replaceAll("\\s+", "");
 
         try {
-            String jsonResponse = fetchRestaurantData(formattedPostcode);
+            String jsonResponse = fetchRestaurantData(formattedPostalcode);
             displayParsedRestaurants(jsonResponse);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static String fetchRestaurantData(String postcode) {
-        HttpGet getRequest = new HttpGet(API_URL + postcode);
+    private static String fetchRestaurantData(String postalCode) {
+        HttpGet getRequest = new HttpGet(API_URL + postalCode);
         CloseableHttpClient client = HttpClients.createDefault();
 
         String response = null;
