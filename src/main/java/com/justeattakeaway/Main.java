@@ -26,24 +26,27 @@ public class Main {
         String postalCode;
 
         while (true) {
-            System.out.print("Enter a UK Postal Code: ");
+            System.out.print("Enter a UK Postal Code (or type 'Quit' to exit): ");
             postalCode = scanner.nextLine().toUpperCase().trim();
 
-            if (isValidPostalCode(postalCode)) {
+            if (postalCode.equalsIgnoreCase("QUIT")) {
+                System.out.println("Bye bye!");
                 break;
+            }
+
+            if (isValidPostalCode(postalCode)) {
+                System.out.println("\nResults for: " + postalCode + "\n");
+                String formattedPostalcode = postalCode.trim().replaceAll("\\s+", "");
+
+                try {
+                    String jsonResponse = fetchRestaurantData(formattedPostalcode);
+                    displayParsedRestaurants(jsonResponse);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("\nInvalid (UK) Postal Code. Please enter a valid (UK) Postal Code.\n");
             }
-        }
-
-        System.out.println("\nResults for: " + postalCode + "\n");
-        String formattedPostalcode = postalCode.trim().replaceAll("\\s+", "");
-
-        try {
-            String jsonResponse = fetchRestaurantData(formattedPostalcode);
-            displayParsedRestaurants(jsonResponse);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -67,6 +70,7 @@ public class Main {
 
         if (restaurantsNode.isEmpty()) {
             System.out.println("No results!");
+            System.out.println("----------------------------------------\n");
         } else {
             List<Restaurant> restaurants = RestaurantParser.parseRestaurants(restaurantsNode);
 
