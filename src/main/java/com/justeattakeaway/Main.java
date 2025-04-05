@@ -65,8 +65,12 @@ public class Main {
         JsonNode rootNode = mapper.readTree(jsonResponse);
         JsonNode restaurantsNode = rootNode.path("restaurants");
 
-        List<Restaurant> restaurants = RestaurantParser.parseRestaurants(restaurantsNode);
-        RestaurantService.displayRestaurants(restaurants);
+        if (restaurantsNode.isEmpty()) {
+            System.out.println("No results!");
+        } else {
+            List<Restaurant> restaurants = RestaurantParser.parseRestaurants(restaurantsNode);
+            RestaurantService.displayRestaurants(restaurants);
+        }
 
     }
 
