@@ -11,33 +11,27 @@ public class RestaurantParser {
     public static List<Restaurant> parseRestaurants(JsonNode restaurants) {
         List<Restaurant> restaurantList = new ArrayList<>();
 
-        if (restaurants.isArray()) {
-            int count = 0;
-            for (JsonNode restaurant : restaurants) {
-                if (count >= 10) break;
+        for (JsonNode restaurant : restaurants) {
+            String name = restaurant.path("name").asText("Unknown Name");
 
-                String name = restaurant.path("name").asText("Unknown Name");
-
-                List<String> cuisineList = new ArrayList<>();
-                JsonNode cuisinesNode = restaurant.path("cuisines");
-                if (cuisinesNode.isArray()) {
-                    for (JsonNode cuisine : cuisinesNode) {
-                        cuisineList.add(cuisine.path("name").asText("Unknown Cuisine"));
-                    }
+            List<String> cuisineList = new ArrayList<>();
+            JsonNode cuisinesNode = restaurant.path("cuisines");
+            if (cuisinesNode.isArray()) {
+                for (JsonNode cuisine : cuisinesNode) {
+                    cuisineList.add(cuisine.path("name").asText("Unknown Cuisine"));
                 }
-
-                double rating = restaurant.path("rating").path("starRating").asDouble(0.0);
-
-                JsonNode addressNode  = restaurant.path("address");
-                Address address = new Address(
-                    addressNode.path("firstLine").asText("Unknown Address"),
-                    addressNode.path("postalCode").asText(""),
-                    addressNode.path("city").asText()
-                );
-
-                restaurantList.add(new Restaurant(name, cuisineList, rating, address));
-                count++;
             }
+
+            double rating = restaurant.path("rating").path("starRating").asDouble(0.0);
+
+            JsonNode addressNode  = restaurant.path("address");
+            Address address = new Address(
+                addressNode.path("firstLine").asText("Unknown Address"),
+                addressNode.path("postalCode").asText(""),
+                addressNode.path("city").asText()
+            );
+
+            restaurantList.add(new Restaurant(name, cuisineList, rating, address));
         }
         return restaurantList;
     }

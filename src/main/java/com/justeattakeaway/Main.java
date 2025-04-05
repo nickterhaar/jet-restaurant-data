@@ -12,7 +12,6 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +19,7 @@ import java.util.regex.Pattern;
 public class Main {
     private static final String API_URL = "https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/";
     private static final String POSTALCODE_REGEX = "^[A-Z]{1,2}[0-9][0-9A-Z]?\\s?[0-9][A-Z]{2}$";
+    private static final int RESULT_LIMIT = 10;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -69,6 +69,11 @@ public class Main {
             System.out.println("No results!");
         } else {
             List<Restaurant> restaurants = RestaurantParser.parseRestaurants(restaurantsNode);
+
+            if (restaurants.size() > RESULT_LIMIT) {
+                restaurants = restaurants.subList(0, RESULT_LIMIT);
+            }
+
             RestaurantService.displayRestaurants(restaurants);
         }
 
