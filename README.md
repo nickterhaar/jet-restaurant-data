@@ -33,18 +33,25 @@ Should I send my assignment to both or just the one in the accompanying email?
 
 ---
 ## My Solution
+My solution is a (rather simple) Java CLI application, which asks the user to input a UK postal code to then get 10 results. The application will ask for a postal code again, so the user doesn't have to restart the application everytime the want to look up a postal code. If the user is done, the user can exit by entering `quit`.
+
 ### How to run
-- Run `git clone https://github.com/nickterhaar/jet-restaurant-data.git`.
+- Make sure you have Java 21 (or higher) installed.
 - Make sure `maven` is installed. Click [this link](https://maven.apache.org/install.html) for instructions on how to install maven and all needed prerequisites.
-- Go to the newly cloned directory (`jet-restaurant-data`).
+- Clone this project -> `git clone https://github.com/nickterhaar/jet-restaurant-data.git`.
+- Go to the cloned directory (`jet-restaurant-data`).
 - Run `mvn clean install`.
-- When build successfully, run `java -jar target/jet-restaurant-data-4.7.25.jar`.
+- When done successfully, run `java -jar target/jet-restaurant-data-4.7.25.jar`.
 - Enter a UK postcode and get your result(s).
 
-### What would I improve?
-- I would change the way the result limit is set. Instead of the currently used (hardcoded) global variable, I would either implement the use of environment variables or would implement the functionality where the wanted result limit can be given by the end user.
-- I would change my code into a service or Spring Repository which just handles the request and response. Right now my application also needs to take care of the way the data is presented to the end user which feels a bit unnatural.
+### What I would improve
+- I would change the way the result limit is set. Instead of the currently used (hardcoded) global variable, I would either implement the use of ***environment variables*** or I would implement the functionality where the wanted result limit can be given by the end user.
+- Following the previous improvement, ***pagination*** could also be implemented for instances that require more than 10 results. This way this application is suited for more than one purpose.
+- I would change my code into a service or ***Spring Repository*** which then just handles the request and response. Right now my application also needs to take care of the way the data is presented to the end user which feels a bit unnatural. More ***separation of concerns*** would be a good improvement.
 - I would improve my models by making better use of Lombok.
+- I would improve on ***data validation***.
+- I would improve on ***error handling*** and ***logging***.
+- Last but not least, I would ofcourse add ***testing*** to make sure the application runs and behaves like expected.
 
 ---
 #### Side notes
